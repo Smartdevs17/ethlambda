@@ -1,8 +1,8 @@
 use super::common::{AggregationBits, Block, Container, ProposerAttestation, TestInfo, TestState};
-use ethlambda_types::attestation::XmssSignature;
+use ethlambda_types::attestation::{AggregationBits as EthAggregationBits, XmssSignature};
 use ethlambda_types::block::{
-    AggregatedSignatureProof, AggregationBits as EthAggregationBitsSig, AttestationSignatures,
-    BlockSignatures, BlockWithAttestation, SignedBlockWithAttestation,
+    AggregatedSignatureProof, AttestationSignatures, BlockSignatures, BlockWithAttestation,
+    SignedBlockWithAttestation,
 };
 use ethlambda_types::primitives::ssz::{Decode as SszDecode, Encode as SszEncode};
 use serde::Deserialize;
@@ -104,7 +104,7 @@ impl From<TestSignedBlockWithAttestation> for SignedBlockWithAttestation {
             .into_iter()
             .map(|att_sig| {
                 // Convert participants bitfield
-                let participants: EthAggregationBitsSig = att_sig.participants.into();
+                let participants: EthAggregationBits = att_sig.participants.into();
                 // Create proof with participants but empty proof_data
                 AggregatedSignatureProof::empty(participants)
             })
